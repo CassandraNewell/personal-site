@@ -4,7 +4,7 @@ import { Widgets } from "../components/widgets";
 import { BlogsAndReshares } from "../components/blogs-and-reshares";
 import { Footer } from "../components/footer";
 
-function App() {
+export default function Home() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -17,5 +17,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
