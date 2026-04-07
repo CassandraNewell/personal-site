@@ -8,34 +8,10 @@ interface ArticleCard {
 
 const articles: ArticleCard[] = [
   {
-    title: "Why I Rebuilt My Site as a Turborepo Monorepo",
-    description:
-      "A walkthrough of setting up a personal site with Turborepo, Vite, and NestJS — and what I learned along the way.",
+    title: "Coming soon!",
+    description: "Blog posts and reshares coming soon",
     tag: "blog",
     date: "Apr 2026",
-  },
-  {
-    title: "The Expanding Dark Forest and Generative AI",
-    description:
-      "Maggie Appleton's exploration of how AI-generated content is reshaping the web and what it means for human creators.",
-    tag: "reshare",
-    url: "https://maggieappleton.com/ai-dark-forest",
-    date: "Mar 2026",
-  },
-  {
-    title: "Playing with WebGPU for the First Time",
-    description:
-      "Notes from experimenting with the WebGPU API — rendering a triangle, compute shaders, and first impressions.",
-    tag: "blog",
-    date: "Feb 2026",
-  },
-  {
-    title: "Local-First Software: You Own Your Data",
-    description:
-      "An essay from Ink & Switch on building software that keeps data on the user's device first, syncing second.",
-    tag: "reshare",
-    url: "https://www.inkandswitch.com/local-first/",
-    date: "Jan 2026",
   },
 ];
 
