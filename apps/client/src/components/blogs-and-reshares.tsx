@@ -18,8 +18,8 @@ const articles: ArticleCard[] = [
 function TagBadge({ tag }: { tag: "blog" | "reshare" }) {
   const styles =
     tag === "blog"
-      ? "bg-forest/10 text-forest"
-      : "bg-terracotta/10 text-terracotta";
+      ? "bg-secondary/10 text-secondary"
+      : "bg-accent/10 text-accent";
 
   return (
     <span
@@ -34,10 +34,10 @@ export function BlogsAndReshares() {
   return (
     <section id="blogs" className="py-16 px-6">
       <div className="max-w-5xl mx-auto">
-        <h2 className="font-display text-3xl font-bold text-bark mb-2">
+        <h2 className="font-display text-3xl font-bold text-primary mb-2">
           Blogs &amp; Reshares
         </h2>
-        <p className="text-warm-500 mb-10">
+        <p className="text-secondary mb-10">
           Writing about things I&apos;m learning, and sharing articles worth
           reading.
         </p>
@@ -45,19 +45,19 @@ export function BlogsAndReshares() {
           {articles.map((article) => (
             <article
               key={article.title}
-              className="bg-white rounded-xl border border-sand p-6 shadow-sm hover:shadow-md transition-shadow"
+              className="bg-white rounded-xl border border-border p-6 shadow-sm hover:shadow-md transition-shadow"
             >
               <div className="flex items-center justify-between mb-3">
                 <TagBadge tag={article.tag} />
-                <span className="text-xs text-warm-400">{article.date}</span>
+                <span className="text-xs text-secondary/60">{article.date}</span>
               </div>
-              <h3 className="font-display text-lg font-semibold text-bark mb-2">
+              <h3 className="font-display text-lg font-semibold text-primary mb-2">
                 {article.url ? (
                   <a
                     href={article.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="hover:text-terracotta transition-colors"
+                    className="hover:text-accent transition-colors"
                   >
                     {article.title} &rarr;
                   </a>
@@ -65,7 +65,7 @@ export function BlogsAndReshares() {
                   article.title
                 )}
               </h3>
-              <p className="text-sm text-warm-600 leading-relaxed">
+              <p className="text-sm text-secondary leading-relaxed">
                 {article.description}
               </p>
             </article>

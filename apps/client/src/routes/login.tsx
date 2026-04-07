@@ -27,7 +27,7 @@ export default function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center px-6">
       <div className="w-full max-w-sm">
-        <h1 className="font-display text-3xl font-semibold text-bark mb-8 text-center">
+        <h1 className="font-display text-3xl font-semibold text-primary mb-8 text-center">
           Log In
         </h1>
 
@@ -46,7 +46,7 @@ export default function Login() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full border border-sand rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-terracotta"
+              className="w-full border border-border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent"
             />
           </div>
 
@@ -63,24 +63,24 @@ export default function Login() {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full border border-sand rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-terracotta"
+              className="w-full border border-border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent"
             />
           </div>
 
           <button
             type="submit"
             disabled={submitting}
-            className="w-full bg-terracotta text-white font-medium py-2 rounded hover:bg-terracotta/90 transition-colors disabled:opacity-50"
+            className="w-full bg-accent text-white font-medium py-2 rounded hover:bg-accent/90 transition-colors disabled:opacity-50"
           >
             {submitting ? "Logging in…" : "Log In"}
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-warm-700">
+        <p className="mt-6 text-center text-sm text-secondary">
           Don&apos;t have an account?{" "}
           <Link
             to="/register"
-            className="text-terracotta hover:underline font-medium"
+            className="text-accent hover:underline font-medium"
           >
             Register
           </Link>
