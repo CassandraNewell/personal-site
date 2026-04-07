@@ -12,7 +12,8 @@
     "test": "jest --detectOpenHandles",
     "test:e2e": "jest --config ./test/jest-e2e.json --detectOpenHandles",
     "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev"
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:seed": "prisma db seed"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.0",
@@ -25,11 +26,11 @@
     "@repo/logger": "workspace:*",
     "bcryptjs": "^3.0.3",
     "dotenv": "^17.4.0",
-    "tsx": "^4.19.0",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "tsx": "^4.19.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^11.0.0",
@@ -38,9 +39,11 @@
     "@repo/eslint-config": "workspace:*",
     "@types/node": "^22.15.3",
     "@types/passport-jwt": "^4.0.1",
+    "@types/pg": "^8.20.0",
     "@types/supertest": "^6.0.2",
     "eslint": "^9.39.0",
     "jest": "^30.2.0",
+    "pg": "^8.20.0",
     "prisma": "^7.6.0",
     "supertest": "^7.1.0",
     "ts-jest": "^29.3.0",
