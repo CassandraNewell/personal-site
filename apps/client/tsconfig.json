@@ -4,7 +4,8 @@
     "outDir": "dist",
     "strictNullChecks": true,
     "jsx": "react-jsx",
-    "rootDirs": [".", ".react-router/types"]
+    "rootDirs": [".", ".react-router/types"],
+    "target": "es6"
   },
   "exclude": ["node_modules"],
   "include": ["src", ".react-router/types"]
