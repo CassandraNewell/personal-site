@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node dist/main.js",
-    "dev": "prisma generate && nest start --watch",
+    "start": "NODE_OPTIONS='--import tsx' node dist/main.js",
+    "dev": "prisma generate && NODE_OPTIONS='--import tsx' nest start --watch",
     "build": "nest build",
     "check-types": "tsc --noEmit",
     "lint": "eslint src/ --max-warnings 0",
@@ -25,6 +25,7 @@
     "@repo/logger": "workspace:*",
     "bcryptjs": "^3.0.3",
     "dotenv": "^17.4.0",
+    "tsx": "^4.19.0",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "reflect-metadata": "^0.2.2",
@@ -43,7 +44,6 @@
     "prisma": "^7.6.0",
     "supertest": "^7.1.0",
     "ts-jest": "^29.3.0",
-    "ts-loader": "^9.5.0",
     "typescript": "5.9.3"
   }
 }
