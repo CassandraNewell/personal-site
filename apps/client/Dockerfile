@@ -1,4 +1,4 @@
-FROM node:20-alpine AS base
+FROM node:24-alpine AS base
 RUN apk update && apk add --no-cache libc6-compat
 
 # --- Prepare: prune the monorepo for this app ---
@@ -16,6 +16,9 @@ RUN corepack enable && corepack prepare pnpm@8.15.6 --activate
 # Install dependencies from pruned lockfile
 COPY --from=prepare /app/out/json/ .
 RUN npm install -g napi-postinstall
+# Use hoisted layout so dependencies survive Docker COPY between stages
+# (pnpm's default symlink-based layout breaks when copied)
+RUN echo "node-linker=hoisted" >> .npmrc
 RUN pnpm install --frozen-lockfile
 
 # Copy source and build
@@ -25,7 +28,7 @@ RUN pnpm turbo build --filter=client
 # --- Run ---
 FROM nginx:alpine AS runner
 
-COPY --from=builder /app/apps/client/dist /usr/share/nginx/html
+COPY --from=builder /app/apps/client/build/client /usr/share/nginx/html
 
 # SPA fallback: serve index.html for all routes
 RUN printf 'server {\n\
