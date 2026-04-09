@@ -19,7 +19,7 @@ env:
   SERVICE: personal-site-api
   # The WIF provider resource name — Terraform will output this, but it follows
   # a predictable format so we can hardcode it here.
-  WIF_PROVIDER: projects/project-1a7de585-a8ff-489e-b5f/locations/global/workloadIdentityPools/github-actions/providers/github-actions-provider
+  WIF_PROVIDER: projects/744918168118/locations/global/workloadIdentityPools/github-actions/providers/github-actions-provider
   WIF_SERVICE_ACCOUNT: github-actions@project-1a7de585-a8ff-489e-b5f.iam.gserviceaccount.com
 
 jobs:
