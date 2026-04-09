@@ -13,3 +13,9 @@ server/dist
 public/dist
 apps/api/src/generated
 .react-router
+# Terraform
+*.tfstate
+*.tfstate.backup
+*.tfstate.*.backup
+.terraform/
+.terraform.lock.hcl
