@@ -33,14 +33,14 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       # Exchange GitHub's OIDC token for a short-lived GCP access token.
       # Under the hood this calls STS with the WIF provider, then impersonates
       # the service account. No secrets needed — identity is proven by the
       # GitHub-signed JWT.
       - name: Authenticate to GCP
-        uses: google-github-actions/auth@v2
+        uses: google-github-actions/auth@v3
         with:
           workload_identity_provider: ${{ env.WIF_PROVIDER }}
           service_account: ${{ env.WIF_SERVICE_ACCOUNT }}
