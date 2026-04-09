@@ -110,6 +110,8 @@ jobs:
 
       - name: Build client
         run: pnpm --filter client build
+        env:
+          VITE_API_URL: https://personal-site-api-744918168118.europe-west1.run.app
 
       - name: Deploy to Cloud Storage
         run: gsutil -m rsync -r -d apps/client/build/client/ gs://${{ env.CLIENT_BUCKET }}

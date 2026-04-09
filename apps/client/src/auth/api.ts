@@ -1,4 +1,6 @@
-const API_BASE = "/api/v1";
+/// <reference types="vite/client" />
+
+const API_BASE = `${import.meta.env.VITE_API_URL ?? ""}/api/v1`;
 
 export async function apiFetch<T>(
   path: string,

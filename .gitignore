@@ -13,6 +13,7 @@ server/dist
 public/dist
 apps/api/src/generated
 .react-router
+**/build
 # Terraform
 *.tfstate
 *.tfstate.backup
