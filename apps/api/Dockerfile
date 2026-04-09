@@ -21,8 +21,9 @@ RUN pnpm install --frozen-lockfile
 # Copy source and build
 COPY --from=prepare /app/out/full/ .
 
-# Generate Prisma client (must happen before build so TypeScript types exist)
-RUN cd apps/api && npx prisma generate
+# Generate Prisma client (must happen before build so TypeScript types exist).
+# See https://github.com/prisma/prisma/issues/28590 re: dummy env var
+RUN cd apps/api && DATABASE_URL="postgresql://dummy" npx prisma generate
 
 RUN pnpm turbo build --filter=api
 
