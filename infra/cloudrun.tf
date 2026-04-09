@@ -27,11 +27,6 @@ resource "google_cloud_run_v2_service" "api" {
       }
 
       env {
-        name  = "PORT"
-        value = "5001"
-      }
-
-      env {
         name  = "NODE_ENV"
         value = "production"
       }
