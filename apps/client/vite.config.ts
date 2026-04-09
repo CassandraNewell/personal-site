@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [reactRouter()],
   server: {
     proxy: {
-      "/auth": "http://localhost:5001",
+      "/api/v1": "http://localhost:5001",
     },
   },
 });

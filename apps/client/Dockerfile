@@ -11,7 +11,7 @@ RUN turbo prune client --docker
 # --- Build ---
 FROM base AS builder
 WORKDIR /app
-RUN corepack enable && corepack prepare pnpm@8.15.6 --activate
+RUN corepack enable && corepack prepare pnpm@10.33.0 --activate
 
 # Install dependencies from pruned lockfile
 COPY --from=prepare /app/out/json/ .

@@ -31,12 +31,5 @@ services:
       postgres:
         condition: service_healthy
 
-  client:
-    build:
-      context: .
-      dockerfile: apps/client/Dockerfile
-    ports:
-      - "3000:80"
-
 volumes:
   pgdata:

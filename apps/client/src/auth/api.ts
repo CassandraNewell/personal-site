@@ -1,4 +1,4 @@
-const API_BASE = "/auth";
+const API_BASE = "/api/v1";
 
 export async function apiFetch<T>(
   path: string,

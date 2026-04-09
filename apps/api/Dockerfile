@@ -11,7 +11,7 @@ RUN turbo prune api --docker
 # --- Build ---
 FROM base AS builder
 WORKDIR /app
-RUN corepack enable && corepack prepare pnpm@8.15.6 --activate
+RUN corepack enable && corepack prepare pnpm@10.33.0 --activate
 
 # Install dependencies from pruned lockfile
 COPY --from=prepare /app/out/json/ .
@@ -28,7 +28,7 @@ RUN pnpm turbo build --filter=api
 
 # Bundle the api package with all production dependencies resolved
 # (automatically includes workspace packages like @repo/logger)
-RUN pnpm --filter api deploy --prod /app/deploy
+RUN pnpm --filter api deploy --legacy --prod /app/deploy
 
 # --- Run ---
 FROM base AS runner

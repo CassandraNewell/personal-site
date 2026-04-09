@@ -40,14 +40,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return;
     }
 
-    apiFetch<User>("/me")
+    apiFetch<User>("/auth/me")
       .then(setUser)
       .catch(() => localStorage.removeItem("token"))
       .finally(() => setLoading(false));
   }, []);
 
   const login = useCallback(async (email: string, password: string) => {
-    const data = await apiFetch<AuthResponse>("/login", {
+    const data = await apiFetch<AuthResponse>("/auth/login", {
       method: "POST",
       body: JSON.stringify({ email, password }),
     });
@@ -56,7 +56,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const register = useCallback(async (email: string, password: string) => {
-    const data = await apiFetch<AuthResponse>("/register", {
+    const data = await apiFetch<AuthResponse>("/auth/register", {
       method: "POST",
       body: JSON.stringify({ email, password }),
     });
