@@ -22,3 +22,8 @@ output "github_actions_sa_email" {
   description = "Email of the GitHub Actions service account"
   value       = google_service_account.github_actions.email
 }
+
+output "client_url" {
+  description = "Public URL of the client (via Cloudflare)"
+  value       = "https://cassandranewell.com"
+}

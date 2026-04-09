@@ -1,4 +1,4 @@
-name: Deploy API
+name: Deploy
 
 on:
   push:
@@ -17,13 +17,14 @@ env:
   REGION: europe-west1
   REGISTRY: europe-west1-docker.pkg.dev/project-1a7de585-a8ff-489e-b5f/personal-site
   SERVICE: personal-site-api
+  CLIENT_BUCKET: cassandranewell.com
   # The WIF provider resource name — Terraform will output this, but it follows
   # a predictable format so we can hardcode it here.
   WIF_PROVIDER: projects/744918168118/locations/global/workloadIdentityPools/github-actions/providers/github-actions-provider
   WIF_SERVICE_ACCOUNT: github-actions@project-1a7de585-a8ff-489e-b5f.iam.gserviceaccount.com
 
 jobs:
-  deploy:
+  deploy-api:
     runs-on: ubuntu-latest
 
     # Required for google-github-actions/auth to request the OIDC token
@@ -74,3 +75,41 @@ jobs:
             --image ${{ env.REGISTRY }}/api:${{ github.sha }} \
             --region ${{ env.REGION }} \
             --quiet
+
+  deploy-client:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: ${{ env.WIF_PROVIDER }}
+          service_account: ${{ env.WIF_SERVICE_ACCOUNT }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build client
+        run: pnpm --filter client build
+
+      - name: Deploy to Cloud Storage
+        run: gsutil -m rsync -r -d apps/client/build/client/ gs://${{ env.CLIENT_BUCKET }}
