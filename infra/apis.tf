@@ -17,3 +17,8 @@ resource "google_project_service" "sql_admin" {
   service            = "sqladmin.googleapis.com"
   disable_on_destroy = false
 }
+
+resource "google_project_service" "iam_credentials" {
+  service            = "iamcredentials.googleapis.com"
+  disable_on_destroy = false
+}

@@ -1,0 +1,76 @@
+name: Deploy API
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "infra/**"
+      - "**.md"
+
+# Prevent concurrent deploys — queue the latest, cancel any in-progress
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+env:
+  PROJECT_ID: project-1a7de585-a8ff-489e-b5f
+  REGION: europe-west1
+  REGISTRY: europe-west1-docker.pkg.dev/project-1a7de585-a8ff-489e-b5f/personal-site
+  SERVICE: personal-site-api
+  # The WIF provider resource name — Terraform will output this, but it follows
+  # a predictable format so we can hardcode it here.
+  WIF_PROVIDER: projects/project-1a7de585-a8ff-489e-b5f/locations/global/workloadIdentityPools/github-actions/providers/github-actions-provider
+  WIF_SERVICE_ACCOUNT: github-actions@project-1a7de585-a8ff-489e-b5f.iam.gserviceaccount.com
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    # Required for google-github-actions/auth to request the OIDC token
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Exchange GitHub's OIDC token for a short-lived GCP access token.
+      # Under the hood this calls STS with the WIF provider, then impersonates
+      # the service account. No secrets needed — identity is proven by the
+      # GitHub-signed JWT.
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ env.WIF_PROVIDER }}
+          service_account: ${{ env.WIF_SERVICE_ACCOUNT }}
+
+      # Tell Docker to use gcloud credentials when pushing to Artifact Registry.
+      # This configures ~/.docker/config.json with a credential helper for the
+      # europe-west1-docker.pkg.dev hostname.
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+
+      - name: Build Docker image
+        run: |
+          docker build \
+            -f apps/api/Dockerfile \
+            -t ${{ env.REGISTRY }}/api:${{ github.sha }} \
+            -t ${{ env.REGISTRY }}/api:latest \
+            .
+
+      - name: Push Docker image
+        run: |
+          docker push ${{ env.REGISTRY }}/api:${{ github.sha }}
+          docker push ${{ env.REGISTRY }}/api:latest
+
+      # Deploy the new image to the existing Cloud Run service.
+      # --service-account ensures the revision runs as the dedicated Cloud Run SA
+      # (not the GitHub Actions SA). Cloud Run pulls the image from Artifact
+      # Registry using its own identity.
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy ${{ env.SERVICE }} \
+            --image ${{ env.REGISTRY }}/api:${{ github.sha }} \
+            --region ${{ env.REGION }} \
+            --quiet
