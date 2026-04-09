@@ -71,6 +71,11 @@ resource "google_cloud_run_v2_service" "api" {
         }
       }
 
+      volume_mounts {
+        name       = "cloudsql"
+        mount_path = "/cloudsql"
+      }
+
       resources {
         limits = {
           cpu    = "1"
@@ -95,6 +100,9 @@ resource "google_cloud_run_v2_service" "api" {
   lifecycle {
     ignore_changes = [
       template[0].containers[0].image,
+      client,
+      client_version,
+      scaling,
     ]
   }
 
